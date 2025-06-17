@@ -15,6 +15,8 @@ import {
 import dayjs from "dayjs";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 
 
@@ -61,6 +63,7 @@ const ComposteurDetail = () => {
     compostMass: "",
     oxygenation: "",
   });
+  const { user } = useContext(UserContext);
   const downloadReportPDF = async () => {
     const reportElement = document.getElementById("report-section");
     if (!reportElement) return;
@@ -420,7 +423,7 @@ const ComposteurDetail = () => {
           ))}
         </select>
 
-        {selectedParam !== "all" && (
+        {user?.role !== "CLIENT" && selectedParam !== "all" && (
           <button
             className="btn btn-warning"
             onClick={() => {
@@ -433,7 +436,7 @@ const ComposteurDetail = () => {
           </button>
         )}
 
-        {selectedParam === "all" && (
+        {user?.role !== "CLIENT" && selectedParam === "all" && (
           <button
             className="btn btn-secondary"
             onClick={() => setEditMode(!editMode)}
@@ -445,20 +448,20 @@ const ComposteurDetail = () => {
 
       {(selectedParam !== "all" || editMode) && (
         <>
-          {!showAddForm && (
-            <button
-              className="btn btn-primary mb-3"
-              onClick={() => setShowAddForm(true)}
-            >
-              Ajouter un relevé
-            </button>
-          )}
+          {user?.role !== "CLIENT" && !showAddForm && (
+              <button
+                className="btn btn-primary mb-3"
+                onClick={() => setShowAddForm(true)}
+              >
+                Ajouter un relevé
+              </button>
+            )}
+          {user?.role !== "CLIENT" && showAddForm && (
+              <form
+                onSubmit={handleAddRecord}
+                className="mb-4 border p-3 rounded bg-light"
+              >
 
-          {showAddForm && (
-            <form
-              onSubmit={handleAddRecord}
-              className="mb-4 border p-3 rounded bg-light"
-            >
               <input
                 type="number"
                 name="temperature"
@@ -560,7 +563,7 @@ const ComposteurDetail = () => {
                 <th>Masse (kg)</th>
                 <th>Oxygène (%)</th>
                 <th>Superviseur</th>
-                {editMode && <th>Actions</th>}
+                {user?.role !== "CLIENT" && editMode && <th>Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -654,7 +657,7 @@ const ComposteurDetail = () => {
                   </td>
 
                   <td>{d.recordedBy ? `${d.recordedBy.firstName} ${d.recordedBy.lastName}` : "Inconnu"}</td>
-                  {editMode && (
+                  {user?.role !== "CLIENT" && editMode && (
                     <td>
                       <button
                         className="btn btn-sm btn-success me-2"

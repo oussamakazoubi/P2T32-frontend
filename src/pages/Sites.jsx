@@ -115,7 +115,7 @@ const Sites = () => {
       <div className="container mt-4">
         <h2 className="mb-4 text-center">Liste des sites de compostage</h2>
 
-        {user?.role !== "CLIENT" && (
+        {user?.role === "ADMIN" && (
           <div className="mb-4 border p-3 rounded bg-light">
             <h4>Ajouter un nouveau site</h4>
             <input
@@ -160,7 +160,7 @@ const Sites = () => {
                   <div className="card-body">
                     <h5 className="card-title d-flex justify-content-between align-items-center">
                       {site.name}
-                      {user?.role !== "CLIENT" && (
+                      {user?.role === "ADMIN" && (
                         <button
                           className="btn btn-sm btn-danger"
                           onClick={() => handleDeleteSite(site.id)}
@@ -182,7 +182,7 @@ const Sites = () => {
                       <>
                         <h6 className="mt-3 d-flex justify-content-between align-items-center">
                           Composteurs
-                          {user?.role !== "CLIENT" && (
+                          {user?.role === "ADMIN" && (
                             <button
                               className="btn btn-sm btn-primary"
                               onClick={() => setSelectedSiteIdForComposteur(site.id)}
@@ -205,7 +205,7 @@ const Sites = () => {
                                 >
                                   Détails
                                 </Link>
-                                {user?.role !== "CLIENT" && (
+                                {user?.role === "ADMIN" && (
                                   <button
                                     className="btn btn-sm btn-danger"
                                     onClick={() => handleDeleteComposteur(composteur.id)}
