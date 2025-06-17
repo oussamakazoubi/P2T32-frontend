@@ -23,7 +23,7 @@ const NotificationBell = () => {
   // Fetch notifications from backend
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get("lhost:3000/api/notifications", {
+      const res = await axios.get(`${API_URL}/api/notifications`, {
         withCredentials: true,
       });
       setNotifications(res.data.notifications);
