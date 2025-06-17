@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
 
   // Fetch user from backend on load
   useEffect(() => {
-    fetch("http://localhost:3000/me", {
+    fetch(`${API_URL}/me`, {
       credentials: "include"
     })
       .then(res => {
