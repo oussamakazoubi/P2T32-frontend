@@ -43,7 +43,7 @@ const MapPage = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/sites`, { withCredentials: true })
+      .get(`${API_URL}/api/sites?forMap=true`, { withCredentials: true })
       .then((res) => setSites(res.data.sites))
       .catch((err) => console.error("Erreur chargement carte", err));
   }, []);
